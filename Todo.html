@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="ToDo">
+  <head>
+    <meta charset="utf-8">
+    <title>To do list that's average</title>
+
+
+
+  </head>
+  <body>
+    <div ng-controller="todoController">
+      <form name="frm" ng-submit="addTodo()">
+        <input type="text" name="newtodo" ng-model="newTodo" required>
+        <button ng-disbaled="frm.$invalid">Be Productive</button>
+
+      </form>
+      <button ng-click="clearCompleted()">Feel Accomplished</button>
+      <ul>
+        <li ng-repeat="todo in todos">
+        <input type="checkbox" ng-model="todo.done" />
+        <span ng-class="{'done':todo.done}">{{todo.title}}</span>
+
+        </li>
+      </ul>
+
+    </div>
+  <script src="todoapp/lib/angular.min.js" ></script>
+<script>
+  var app= angular.module('ToDo', []);
+  app.controller('todoController', ['$scope', function($scope){
+    $scope.todos=[
+      {'title':'Build an Average To do app', 'done':false}
+    ];
+    $scope.addTodo = function(){
+      $scope.todos.push({'title':$scope.newTodo,'done':false})
+      $scope.newTodo = ""
+    }
+
+
+    $scope.clearCompleted = function(){
+      $scope.todos = $scope.todos.filter(function(item){
+        return !item.done
+      })
+    };
+  }])
+  </script>
+
+  </body>
+</html>
